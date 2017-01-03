@@ -22,19 +22,17 @@ def landing():
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-	#sort events by time and date
-	#then, make a list of forms (one for each event - sorted)
-	#iterate through all the forms, checking if each one is validated on submit (only one submitted at a time)
-	#if it is, add that user to the going list of the event and commit(check if this back populates and adds event to user's events)
-	#in index.html, when iterating through events, display each form (by index)
 	user = g.user
 	events = Event.query.all()
 	forms = []
+	#create a form for each event to mark attendance (or to edit event if host)
 	for i in range(len(events)):
 		forms.append(GoingForm(prefix="form%s" % i))
 	for i in range(len(forms)):
+		#redirect to event edit page if 'edit event' is pressed
 		if forms[i].validate_on_submit() and forms[i].edit_event and events[i].host_id == user.id:
 			return redirect(url_for('editevent', event_id = events[i].id))
+		#change event attendance status if it is different from before
 		elif forms[i].validate_on_submit() and forms[i].confirm:
 			if forms[i].is_going.data and events[i] not in user.events:
 				user.events.append(events[i])
@@ -55,15 +53,18 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 	form = LoginForm()
+	#redirect to home page if already logged in
 	if g.user is not None and g.user.is_authenticated:
 		return redirect(url_for('index'))
 	if form.validate_on_submit():
 		session['remember_me'] = form.remember_me.data
 		user = User.query.filter_by(email=form.email.data).first()
+		#check if valid user
 		if user is None:
 			message = Markup('No account associated with given email address. Please try again or sign up <a href="/signup">here</a>.')
 			flash(message)
 			return redirect(url_for('login'))
+		#check password
 		if user.password != form.password.data:
 			flash('Incorrect password. Please try again.')
 			return redirect(url_for('login'))
@@ -79,14 +80,17 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 	form = SignupForm()
+	#redirect to home page if already logged in
 	if g.user is not None and g.user.is_authenticated:
 		return redirect(url_for('index'))
 	if form.validate_on_submit():
+		#check if user already exists
 		user = User.query.filter_by(email=form.email.data).first()
 		if user is not None:
 			message = Markup('An account already exists for the given email address. Please try again or log in <a href="/login">here</a>.')
 			flash(message)
 			return redirect(url_for('signup'))
+		#create a new user and add to database
 		user = User(nickname=form.nickname.data, email=form.email.data, password=form.password.data)
 		db.session.add(user)
 		db.session.commit()
@@ -144,6 +148,7 @@ def createevent():
 	form = EventForm()
 	user = g.user
 	if form.validate_on_submit():
+		#create new event and add to database
 		event = Event(type=form.type.data, date=form.date.data, location=form.location.data, time=form.time.data, description=form.description.data, host_id=user.id, going=[user])
 		db.session.add(event)
 		user.events.append(event)
@@ -160,6 +165,7 @@ def editevent(event_id):
 	form = EditEventForm()
 	event = Event.query.filter_by(id=event_id).first()
 	if form.validate_on_submit():
+		#check which fields have been changed
 		if form.new_type.data != event.type:
 			event.edited_type = True
 			event.type = form.new_type.data
