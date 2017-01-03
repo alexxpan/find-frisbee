@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Edit This Event</h1>
+	<h2>(All fields are optional.)</h2>
+	<form action="" method="post" name="editevent">
+		{{ form.hidden_tag() }}
+		<p>
+			Event type: {{ form.new_type(value=event.type) }}<br>
+			Event date: {{ form.new_date(value=event.date) }}<br>
+			Event location: {{ form.new_location(value=event.location) }}<br>
+			Event time: {{ form.new_time(value=event.time) }}<br>
+			Event description: {{ form.new_description(value=event.description) }}<br>
+		</p>
+		<p>{{ form.delete }} Delete event? (Warning: please notify other users who are attending!)</p>
+		<p><input type="submit" value="Save Changes"></p>
+
+	</form>
+
+
+
+{% endblock %}

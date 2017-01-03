@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Change Nickname</h1>
+  <form action="" method="post" name="changenickname">
+  	{{ form.hidden_tag() }}
+  	<p>
+          Please enter a new nickname:<br>
+          {{ form.nickname }}
+          {% for error in form.nickname.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br>
+    </p>
+    <p><input type="submit" value="Confirm"></p>
+  </form>
+{% endblock %}

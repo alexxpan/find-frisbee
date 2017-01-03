@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Nickname: {{ user.nickname }}</h1>
+  <h2>Email: {{ user.email }}</h2>
+  <h3>User ID: {{ user.id }}</h3>
+
+  {% if g.user.id == user.id %}
+  	<p><input type="button" class="button_active" onclick="location.href='/changenickname';" value="Change Nickname"/></p>
+  	<p><input type="button" class="button_active" onclick="location.href='/changepassword';" value="Change Password"/></p>
+  {% endif %}
+{% endblock %}

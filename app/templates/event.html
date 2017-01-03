@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Create an Event</h1>
+  <form action="" method="post" name="event">
+      {{ form.hidden_tag() }}
+      <p>
+          What are you organizing?<br>
+          {{ form.type }}
+          {% for error in form.type.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br><br>
+          Event date: <br>
+          {{ form.date }}
+          {% for error in form.date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br><br>
+          Event location:<br>
+          {{ form.location }}
+          {% for error in form.location.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br><br>
+          Event time:<br>
+          {{ form.time }}
+          {% for error in form.time.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br><br>
+          Enter a short description (optional):<br>
+          {{ form.description }}
+          {% for error in form.description.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}<br><br>
+      </p>
+      <p><input type="submit" value="Create"></p>
+  </form>
+{% endblock %}

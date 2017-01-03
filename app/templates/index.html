@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Welcome, {{ user.nickname }}!</h1>
+	<h2>Upcoming frisbee events near Cal:</h2>
+	<p>*Bold indicates host, Red indicates change</p>
+	<br>
+	{% for event in events %}
+	<div><p>
+			{{ event.type }} ({{ event.date }})<br>
+			{{ event.location }}, at {{ event.time }}<br>
+			{% if event.description|length > 0 %} <i>{{ event.description }}</i><br>{% endif %}
+			Going:
+				{% for user in event.going %}
+					{% if user.id == event.host_id %}
+						{% if loop.index == event.going|length %}
+							<a href="{{ url_for('profile', user_id = event.host_id) }}" style="text-decoration: none; color: black"><strong>{{ user.nickname}}</strong></a>
+						{% else %}
+							<a href="{{ url_for('profile', user_id = event.host_id) }}" style="text-decoration: none; color: black"><strong>{{ user.nickname}}</strong></a>,
+						{% endif %}
+					{% else %}
+						{% if loop.index == event.going|length %}
+							{{ user.nickname}}
+						{% else %}
+							{{ user.nickname}}, 
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+			{% if user.id == event.host_id %}
+				<p><input type="checkbox" checked="checked" disabled="disabled">You are the host.</p>
+				<form action="" method="post" name="{{ loop.index - 1 }}">
+					{{ forms[loop.index - 1].hidden_tag() }}
+					<p>{{ forms[loop.index - 1].edit_event(value="Edit Event") }}</p>
+				</form>
+			{% else %}
+				<form action="" method="post" name="{{ loop.index - 1 }}">
+					{{ forms[loop.index - 1].hidden_tag() }}
+					<p>{{ forms[loop.index - 1].is_going(checked=event in user.events) }} Going?</p>
+					<p>{{ forms[loop.index - 1].confirm(value="Confirm") }}</p>
+				</form>
+			{% endif %}
+	</p></div><br>
+	{% endfor %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
