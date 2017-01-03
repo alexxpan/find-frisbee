@@ -12,6 +12,7 @@
 			{% if event.description|length > 0 %} <i>{{ event.description }}</i><br>{% endif %}
 			Going:
 				{% for user in event.going %}
+					<!-- Display host's name as bold, link to host's profile so users can email him/her -->
 					{% if user.id == event.host_id %}
 						{% if loop.index == event.going|length %}
 							<a href="{{ url_for('profile', user_id = event.host_id) }}" style="text-decoration: none; color: black"><strong>{{ user.nickname}}</strong></a>
@@ -26,6 +27,7 @@
 						{% endif %}
 					{% endif %}
 				{% endfor %}
+			<!-- Enable host to edit their own events. Enable other users to check if they are going to events or not. -->
 			{% if user.id == event.host_id %}
 				<p><input type="checkbox" checked="checked" disabled="disabled">You are the host.</p>
 				<form action="" method="post" name="{{ loop.index - 1 }}">

@@ -4,7 +4,7 @@
   <h1>Nickname: {{ user.nickname }}</h1>
   <h2>Email: {{ user.email }}</h2>
   <h3>User ID: {{ user.id }}</h3>
-
+  <!-- Allow profile editing if viewing own profile -->
   {% if g.user.id == user.id %}
   	<p><input type="button" class="button_active" onclick="location.href='/changenickname';" value="Change Nickname"/></p>
   	<p><input type="button" class="button_active" onclick="location.href='/changepassword';" value="Change Password"/></p>
