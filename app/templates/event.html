@@ -5,26 +5,31 @@
   <form action="" method="post" name="event">
       {{ form.hidden_tag() }}
       <p>
+          <!-- Event type -->
           What are you organizing?<br>
           {{ form.type }}
           {% for error in form.type.errors %}
             <span style="color: red;">[{{ error }}]</span>
           {% endfor %}<br><br>
+          <!-- Event date -->
           Event date: <br>
           {{ form.date }}
           {% for error in form.date.errors %}
             <span style="color: red;">[{{ error }}]</span>
           {% endfor %}<br><br>
+          <!-- Event location -->
           Event location:<br>
           {{ form.location }}
           {% for error in form.location.errors %}
             <span style="color: red;">[{{ error }}]</span>
           {% endfor %}<br><br>
-          Event time:<br>
+          <!-- Event time -->
+          Event time (be sure to specify am or pm!):<br>
           {{ form.time }}
           {% for error in form.time.errors %}
             <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}<br><br>
+          {% endfor %}<br><br> 
+          <!-- Event description -->
           Enter a short description (optional):<br>
           {{ form.description }}
           {% for error in form.description.errors %}
