@@ -7,9 +7,18 @@
 	<br>
 	{% for event in events %}
 	<div><p>
-			{{ event.type }} ({{ event.date }})<br>
-			{{ event.location }}, at {{ event.time }}<br>
-			{% if event.description|length > 0 %} <i>{{ event.description }}</i><br>{% endif %}
+			<!-- Display event details. Parts that have been edited by the host are displayed in red. -->
+			{% if event.edited_type %}<span style="color: red;">{{ event.type }}</span>{% else %}{{ event.type }}{% endif %} 
+			{% if event.edited_date %}(<span style="color: red;">{{ event.date }}</span>){% else %}({{ event.date }}){% endif %}<br>
+			{% if event.edited_location %}<span style="color: red;">{{ event.location }}</span>{% else %}{{ event.location }}{% endif %}
+			{% if event.edited_time %}, at <span style="color: red;">{{ event.time }}</span>{% else %}, at {{ event.time}}{% endif %}<br>
+			{% if event.description|length > 0 %}
+				{% if event.edited_description %}
+					<span style="color: red;"><i>{{ event.description }}</i></span><br>
+				{% else %}
+					<i>{{ event.description }}</i><br>
+				{% endif %}
+			{% endif %}
 			Going:
 				{% for user in event.going %}
 					<!-- Display host's name as bold, link to host's profile so users can email him/her -->
