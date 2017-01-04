@@ -3,6 +3,7 @@ from app import app, db, lm
 from .forms import LoginForm, SignupForm, NicknameForm, PasswordForm, EventForm, GoingForm, EditEventForm
 from flask_login import login_user, logout_user, current_user, login_required
 from .models import User, Event
+from datetime import datetime
 
 @app.before_request
 def before_request():
@@ -24,6 +25,29 @@ def landing():
 def index():
 	user = g.user
 	events = Event.query.all()
+	#change formatting for event date and time
+	for event in events:
+		#change time to correct format (hh:mm in 24-hr format)
+		formatted_time = event.time
+		if len(event.time) == 7:
+			formatted_time = '0' + formatted_time
+		if formatted_time[6:8] == 'pm':
+			hour = int(formatted_time[0:2]) + 12 
+			formatted_time = str(hour) + formatted_time[2:]
+		formatted_time = formatted_time[0:5]
+		event.formatted_time = formatted_time
+		#change date to correct format (mm/dd)
+		formatted_date = event.date
+		if len(event.date) == 4:
+			formatted_date = '0' + formatted_date
+		event.formatted_date = formatted_date
+	#sort events by date and time
+	events.sort(key=lambda x: x.formatted_date + x.formatted_time)
+	#don't display events on days that have already passed
+	current_date = datetime.now().strftime('%m/%d')
+	for event in events:
+		if event.formatted_date < current_date:
+			events.remove(event)
 	forms = []
 	#create a form for each event to mark attendance (or to edit event if host)
 	for i in range(len(events)):

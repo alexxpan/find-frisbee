@@ -2,6 +2,7 @@
 
 {% block content %}
   <h1>Create an Event</h1>
+  <p>(NOTE: Events scheduled for dates that have already passed will not be displayed)</p><br>
   <form action="" method="post" name="event">
       {{ form.hidden_tag() }}
       <p>
@@ -12,7 +13,7 @@
             <span style="color: red;">[{{ error }}]</span>
           {% endfor %}<br><br>
           <!-- Event date -->
-          Event date: <br>
+          Event date (mm/dd): <br>
           {{ form.date }}
           {% for error in form.date.errors %}
             <span style="color: red;">[{{ error }}]</span>
@@ -24,7 +25,7 @@
             <span style="color: red;">[{{ error }}]</span>
           {% endfor %}<br><br>
           <!-- Event time -->
-          Event time (be sure to specify am or pm!):<br>
+          Event time (hh:mm am/pm):<br>
           {{ form.time }}
           {% for error in form.time.errors %}
             <span style="color: red;">[{{ error }}]</span>
