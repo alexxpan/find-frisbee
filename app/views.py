@@ -8,9 +8,7 @@ from datetime import datetime
 @app.before_request
 def before_request():
 	g.user = current_user
-	print(g.user)
 
-	
 @lm.user_loader
 def load_user(id):
 	return User.query.get(int(id))
@@ -19,8 +17,6 @@ def load_user(id):
 @app.route('/landing')
 def landing():
 	if g.user is not None and g.user.is_authenticated:
-		print("landing redirect, user = %s" % g.user)
-		print(g.user.is_authenticated)
 		return redirect(url_for('index'))
 	return render_template('landing.html')
 
