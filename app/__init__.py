@@ -3,6 +3,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from config import basedir
+import sys
+import logging
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -13,7 +15,8 @@ lm.login_view = 'login'
 
 from app import views, models
 
-
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR
 
 
 
