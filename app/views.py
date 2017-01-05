@@ -9,7 +9,6 @@ from datetime import datetime
 def before_request():
 	g.user = current_user
 	print(g.user)
-	print("authenticated status of user: %s" % g.user.is_authenticated)
 
 	
 @lm.user_loader
@@ -21,6 +20,7 @@ def load_user(id):
 def landing():
 	if g.user is not None and g.user.is_authenticated:
 		print("landing redirect, user = %s" % g.user)
+		print(g.user.is_authenticated)
 		return redirect(url_for('index'))
 	return render_template('landing.html')
 
