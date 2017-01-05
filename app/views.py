@@ -18,9 +18,9 @@ def load_user(id):
 @app.route('/')
 @app.route('/landing')
 def landing():
-	if g.user is not None and g.user.is_authenticated:
+	if g.user is not None and g.user.is_authenticated():
 		print("landing redirect, user = %s" % g.user)
-		print(g.user.is_authenticated)
+		print(g.user.is_authenticated())
 		return redirect(url_for('index'))
 	return render_template('landing.html')
 
@@ -82,7 +82,7 @@ def index():
 def login():
 	form = LoginForm()
 	#redirect to home page if already logged in
-	if g.user is not None and g.user.is_authenticated:
+	if g.user is not None and g.user.is_authenticated():
 		return redirect(url_for('index'))
 	if form.validate_on_submit():
 		session['remember_me'] = form.remember_me.data
@@ -109,7 +109,7 @@ def login():
 def signup():
 	form = SignupForm()
 	#redirect to home page if already logged in
-	if g.user is not None and g.user.is_authenticated:
+	if g.user is not None and g.user.is_authenticated():
 		return redirect(url_for('index'))
 	if form.validate_on_submit():
 		#check if user already exists
