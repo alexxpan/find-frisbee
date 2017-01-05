@@ -97,7 +97,7 @@ def login():
 			remember_me = session['remember_me']
 			session.pop('remember_me', None)
 		login_user(user, remember = remember_me)
-		return url_for('index'))
+		return url_for('index')
 	return render_template('login.html',
 							form=form)
 
