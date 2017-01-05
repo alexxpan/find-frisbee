@@ -9,6 +9,8 @@ from datetime import datetime
 def before_request():
 	g.user = current_user
 	print(g.user)
+	print("authenticated status of user: %s" % g.user.is_authenticated)
+
 	
 @lm.user_loader
 def load_user(id):
