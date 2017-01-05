@@ -8,6 +8,7 @@ from datetime import datetime
 @app.before_request
 def before_request():
 	g.user = current_user
+	print(g.user)
 	
 @lm.user_loader
 def load_user(id):
@@ -17,7 +18,7 @@ def load_user(id):
 @app.route('/landing')
 def landing():
 	if g.user is not None and g.user.is_authenticated:
-		print("asdfasdfasdfasdfasdf")
+		print("landing redirect")
 		return redirect(url_for('index'))
 	return render_template('landing.html')
 
@@ -125,6 +126,7 @@ def signup():
 							form=form)
 
 @app.route('/logout')
+@login_required
 def logout():
 	logout_user()
 	return redirect(url_for('landing'))
