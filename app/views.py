@@ -17,7 +17,8 @@ def load_user(id):
 @app.route('/landing')
 def landing():
 	if g.user is not None and g.user.is_authenticated:
-		return redirect(url_for('index'), code=307)
+		print("asdfasdfasdfasdfasdf")
+		return redirect(url_for('index'))
 	return render_template('landing.html')
 
 @app.route('/index', methods=['GET', 'POST'])
@@ -55,19 +56,19 @@ def index():
 	for i in range(len(forms)):
 		#redirect to event edit page if 'edit event' is pressed
 		if forms[i].validate_on_submit() and forms[i].edit_event and events[i].host_id == user.id:
-			return redirect(url_for('editevent', event_id = events[i].id), code=307)
+			return redirect(url_for('editevent', event_id = events[i].id))
 		#change event attendance status if it is different from before
 		elif forms[i].validate_on_submit() and forms[i].confirm:
 			if forms[i].is_going.data and events[i] not in user.events:
 				user.events.append(events[i])
 				db.session.commit()
 				flash('You are now attending %s' % events[i].type)
-				return redirect(url_for('index'), code=307)
+				return redirect(url_for('index'))
 			elif not forms[i].is_going.data and events[i] in user.events:
 				user.events.remove(events[i])
 				db.session.commit()
 				flash('You are no longer attending %s' % events[i].type)
-				return redirect(url_for('index'), code=307)
+				return redirect(url_for('index'))
 	return render_template('index.html',
 						   title='Cal',
 						   user=user,
@@ -79,7 +80,7 @@ def login():
 	form = LoginForm()
 	#redirect to home page if already logged in
 	if g.user is not None and g.user.is_authenticated:
-		return redirect(url_for('index'), code=307)
+		return redirect(url_for('index'))
 	if form.validate_on_submit():
 		session['remember_me'] = form.remember_me.data
 		user = User.query.filter_by(email=form.email.data).first()
@@ -87,17 +88,17 @@ def login():
 		if user is None:
 			message = Markup('No account associated with given email address. Please try again or sign up <a href="/signup">here</a>.')
 			flash(message)
-			return redirect(url_for('login'), code=307)
+			return redirect(url_for('login'))
 		#check password
 		if user.password != form.password.data:
 			flash('Incorrect password. Please try again.')
-			return redirect(url_for('login'), code=307)
+			return redirect(url_for('login'))
 		remember_me = False
 		if 'remember_me' in session:
 			remember_me = session['remember_me']
 			session.pop('remember_me', None)
 		login_user(user, remember = remember_me)
-		return redirect(url_for('index'), code=307)
+		return redirect(url_for('index'))
 	return render_template('login.html',
 							form=form)
 
@@ -106,34 +107,34 @@ def signup():
 	form = SignupForm()
 	#redirect to home page if already logged in
 	if g.user is not None and g.user.is_authenticated:
-		return redirect(url_for('index'), code=307)
+		return redirect(url_for('index'))
 	if form.validate_on_submit():
 		#check if user already exists
 		user = User.query.filter_by(email=form.email.data).first()
 		if user is not None:
 			message = Markup('An account already exists for the given email address. Please try again or log in <a href="/login">here</a>.')
 			flash(message)
-			return redirect(url_for('signup'), code=307)
+			return redirect(url_for('signup'))
 		#create a new user and add to database
 		user = User(nickname=form.nickname.data, email=form.email.data, password=form.password.data)
 		db.session.add(user)
 		db.session.commit()
 		flash('Account creation success. Please log in below.')
-		return redirect(url_for('/login'), code=307)
+		return redirect(url_for('/login'))
 	return render_template('signup.html',
 							form=form)
 
 @app.route('/logout')
 def logout():
 	logout_user()
-	return redirect(url_for('landing'), code=307)
+	return redirect(url_for('landing'))
 
 @app.route('/profile/<user_id>')
 def profile(user_id):
 	user = User.query.filter_by(id=user_id).first()
 	if user == None:
 		flash('User %s not found.' % user_id)
-		return redirect(url_for('index'), code=307)
+		return redirect(url_for('index'))
 	return render_template('profile.html',
 							user=user)
 
@@ -146,7 +147,7 @@ def changenickname():
 		flash('Nickname successfully changed.')
 		user.nickname = form.nickname.data
 		db.session.commit()
-		return redirect(url_for('profile', user_id = user.id), code=307)
+		return redirect(url_for('profile', user_id = user.id))
 	return render_template('changenickname.html',
 							form=form)
 
@@ -160,9 +161,9 @@ def changepassword():
 			flash('Password successfully changed.')
 			user.password = form.new_password.data
 			db.session.commit()
-			return redirect(url_for('profile', user_id = user.id), code=307)
+			return redirect(url_for('profile', user_id = user.id))
 		flash('Error: Old password does not match current password.')
-		return redirect(url_for('changepassword'), code=307)
+		return redirect(url_for('changepassword'))
 	return render_template('changepassword.html',
 							form=form)
 
@@ -178,7 +179,7 @@ def createevent():
 		user.events.append(event)
 		db.session.commit()
 		flash('Your event is now live! Tell your friends about it!')
-		return redirect(url_for('index'), code=307)
+		return redirect(url_for('index'))
 	return render_template('event.html',
 							form=form)
 
@@ -208,7 +209,7 @@ def editevent(event_id):
 		if form.delete.data:
 			db.session.delete(event)
 		db.session.commit()
-		return redirect(url_for('index'), code=307)
+		return redirect(url_for('index'))
 	return render_template('editevent.html',
 							form=form,
 							event=event)
