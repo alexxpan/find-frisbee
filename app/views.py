@@ -18,7 +18,7 @@ def load_user(id):
 @app.route('/landing')
 def landing():
 	if g.user is not None and g.user.is_authenticated:
-		print("landing redirect")
+		print("landing redirect, user = %s" % g.user)
 		return redirect(url_for('index'))
 	return render_template('landing.html')
 
