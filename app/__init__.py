@@ -16,7 +16,7 @@ lm.login_view = 'login'
 from app import views, models
 
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
-app.logger.setLevel(logging.ERROR
+app.logger.setLevel(logging.ERROR)
 
 
 
