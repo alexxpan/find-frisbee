@@ -9,7 +9,7 @@
 	<div><p>
 			<!-- Display event details. Parts that have been edited by the host are displayed in red. -->
 			{% if event.edited_type %}<span style="color: red;">{{ event.type }}</span>{% else %}{{ event.type }}{% endif %} 
-			{% if event.edited_date %}(<span style="color: red;">{{ event.date }}</span>){% else %}({{ event.date }}){% endif %}<br>
+			{% if event.edited_date %}(<span style="color: red;">{{ event.formatted_date }}</span>){% else %}({{ event.formatted_date }}){% endif %}<br>
 			{% if event.edited_location %}<span style="color: red;">{{ event.location }}</span>,{% else %}{{ event.location }},{% endif %}
 			{% if event.edited_time %} at <span style="color: red;">{{ event.time }}</span>{% else %} at {{ event.time}}{% endif %}<br>
 			{% if event.description|length > 0 %}
