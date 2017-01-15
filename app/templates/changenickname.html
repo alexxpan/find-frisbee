@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Change Nickname</h1>
-  <form action="" method="post" name="changenickname">
-  	{{ form.hidden_tag() }}
-  	<p>
-          Please enter a new nickname:<br>
-          {{ form.nickname }}
-          {% for error in form.nickname.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}<br>
-    </p>
-    <p><input type="submit" value="Confirm"></p>
-  </form>
+
+  <div class="container page-header text-center">
+      <h1>Change Nickname</h1>
+  </div>
+
+  <div class="container text-center">
+    <form action="" method="post" name="changenickname">
+    	{{ form.hidden_tag() }}
+    	<p>
+            Please enter a new nickname:<br>
+            {{ form.nickname }}<br>
+            {% for error in form.nickname.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br>
+      </p>
+      <p><input type="submit" class="btn btn-success btn-lg" value="Confirm"></p>
+    </form>
+  </div>
 {% endblock %}

@@ -1,42 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Create an Event</h1>
-  <p>(NOTE: Events scheduled for dates that have already passed will not be displayed)</p><br>
-  <form action="" method="post" name="event">
-      {{ form.hidden_tag() }}
-      <p>
-          <!-- Event type -->
-          What are you organizing?<br>
-          {{ form.type }}
-          {% for error in form.type.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}<br><br>
-          <!-- Event date -->
-          Event date (mm/dd): <br>
-          {{ form.date }}
-          {% for error in form.date.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}<br><br>
-          <!-- Event location -->
-          Event location:<br>
-          {{ form.location }}
-          {% for error in form.location.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}<br><br>
-          <!-- Event time -->
-          Event time (hh:mm am/pm):<br>
-          {{ form.time }}
-          {% for error in form.time.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}<br><br> 
-          <!-- Event description -->
-          Enter a short description (optional):<br>
-          {{ form.description }}
-          {% for error in form.description.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}<br><br>
-      </p>
-      <p><input type="submit" value="Create"></p>
-  </form>
+
+  <div class="container page-header text-center">
+      <h1>Create an Event</h1>
+      <p>(NOTE: Events scheduled for dates that have already passed will not be displayed)</p><br>
+  </div>
+  
+  <div class="container text-center">
+    <form action="" method="post" name="event">
+        {{ form.hidden_tag() }}
+        <p>
+            <!-- Event type -->
+            What are you organizing?<br>
+            {{ form.type }}
+            {% for error in form.type.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br><br>
+            <!-- Event date -->
+            Event date (mm/dd): <br>
+            {{ form.date }}
+            {% for error in form.date.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br><br>
+            <!-- Event location -->
+            Event location:<br>
+            {{ form.location }}
+            {% for error in form.location.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br><br>
+            <!-- Event time -->
+            Event time (hh:mm am/pm):<br>
+            {{ form.time }}
+            {% for error in form.time.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br><br> 
+            <!-- Event description -->
+            Enter a short description (optional):<br>
+            {{ form.description }}
+            {% for error in form.description.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}<br><br>
+        </p>
+        <p><input type="submit" class="btn btn-success btn-lg" value="Create"></p>
+    </form>
+  </div>
 {% endblock %}
