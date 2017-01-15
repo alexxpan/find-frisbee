@@ -46,9 +46,10 @@ def index():
 	#don't display events on days that have already passed
 	current_date = datetime.now().strftime('%m/%d')
 	for event in events:
-		print(event.formatted_time)
+		print(event.formatted_date)
 		print(current_date)
 		if event.formatted_date < current_date:
+			print("deleted event:" + event)
 			events.remove(event)
 	forms = []
 	#create a form for each event to mark attendance (or to edit event if host)
