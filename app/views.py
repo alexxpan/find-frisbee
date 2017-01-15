@@ -46,6 +46,8 @@ def index():
 	#don't display events on days that have already passed
 	current_date = datetime.now().strftime('%m/%d')
 	for event in events:
+		print(event.formatted_time)
+		print(current_date)
 		if event.formatted_date < current_date:
 			events.remove(event)
 	forms = []
@@ -92,7 +94,7 @@ def login():
 		if user.password != form.password.data:
 			flash('Incorrect password. Please try again.')
 			return redirect(url_for('login'))
-		remember_me = False
+		remember_me = Falsex
 		if 'remember_me' in session:
 			remember_me = session['remember_me']
 			session.pop('remember_me', None)
