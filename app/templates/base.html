@@ -1,3 +1,22 @@
+<style type="text/css">
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin-bottom: 60px /* Footer height */
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px 
+}
+
+</style>
+
+
 <html>
 	<head>
 		{% if title%}
@@ -28,8 +47,7 @@
 	    {% endwith %}
 		{% block content %}
 		{% endblock %}
-	<div class="footer"><hr><a href="https://github.com/alexxpan/find-frisbee">View on Github</a></div>
-
+	<footer><hr><a href="https://github.com/alexxpan/find-frisbee" target="_blank">View on Github</a></footer>
 
 	</body>
 </html>
