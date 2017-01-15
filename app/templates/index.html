@@ -13,7 +13,7 @@
 	</div>
 
 	{% for event in events %}
-	<div class="container" style="font-size:large"><p>
+	<div class="container"><p>
 			<!-- Display event details. Parts that have been edited by the host are displayed in red. -->
 			{% if event.edited_type %}<span style="color: red;">{{ event.type }}</span>{% else %}{{ event.type }}{% endif %} 
 			{% if event.edited_date %}(<span style="color: red;">{{ event.formatted_date }}</span>){% else %}({{ event.formatted_date }}){% endif %}<br>
