@@ -49,7 +49,8 @@ def index():
 		print(event.formatted_date)
 		print(current_date)
 		if event.formatted_date < current_date:
-			print("deleted event:" + event)
+			print("deleted event")
+			print(event)
 			events.remove(event)
 	forms = []
 	#create a form for each event to mark attendance (or to edit event if host)
