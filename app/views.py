@@ -94,7 +94,7 @@ def login():
 		if user.password != form.password.data:
 			flash('Incorrect password. Please try again.')
 			return redirect(url_for('login'))
-		remember_me = Falsex
+		remember_me = False
 		if 'remember_me' in session:
 			remember_me = session['remember_me']
 			session.pop('remember_me', None)
