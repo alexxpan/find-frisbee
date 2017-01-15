@@ -52,6 +52,9 @@ def index():
 			print("deleted event")
 			print(event)
 			events.remove(event)
+			db.session.delete(event)
+			db.session.commit()
+			
 	forms = []
 	#create a form for each event to mark attendance (or to edit event if host)
 	for i in range(len(events)):
