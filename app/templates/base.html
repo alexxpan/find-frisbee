@@ -50,11 +50,12 @@ nav {
 						<li><a href="{{ url_for('createevent') }}">Create Event</a></li>
 			        {% endif %}
 			    </ul> 
-			    {% if g.user.is_authenticated %}
-				    <ul class="nav navbar-nav navbar-right">
+			    <ul class="nav navbar-nav navbar-right">
+			    	<li><a href="{{ url_for('info') }}">Info</a></li>
+			    	{% if g.user.is_authenticated %}
 				    	<li><a href="{{ url_for('logout') }}">Logout</a></li>
-				    </ul>  
-				{% endif %}
+				    {% endif %}
+				</ul>  
 		    </div>
    		</nav>	
   		<!-- Display flashed messages -->

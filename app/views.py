@@ -219,6 +219,10 @@ def editevent(event_id):
 							form=form,
 							event=event)
 
+@app.route('/info')
+def info():
+	return render_template('info.html')
+
 
 
 
