@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<h1>Welcome, {{ user.nickname }}!</h1>
-	<h2>Upcoming frisbee events near Cal:</h2>
-	<p>*<strong>Bold</strong> indicates host, <span style="color:red">Red</span> indicates change</p>
-	<br>
+
+	<div class="container page-header">
+	    <h1>Welcome, {{ user.nickname }}!</h1>
+	</div>
+
+	<div class="container">
+		<h2>Upcoming frisbee events near Cal:</h2>
+		<p>*<strong>Bold</strong> indicates host, <span style="color:red">Red</span> indicates change</p>
+		<br><br>
+	</div>
+
 	{% for event in events %}
-	<div><p>
+	<div class="container" style="font-size:large"><p>
 			<!-- Display event details. Parts that have been edited by the host are displayed in red. -->
 			{% if event.edited_type %}<span style="color: red;">{{ event.type }}</span>{% else %}{{ event.type }}{% endif %} 
 			{% if event.edited_date %}(<span style="color: red;">{{ event.formatted_date }}</span>){% else %}({{ event.formatted_date }}){% endif %}<br>

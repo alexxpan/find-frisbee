@@ -210,6 +210,9 @@ def editevent(event_id):
 			event.description = form.new_description.data
 		if form.delete.data:
 			db.session.delete(event)
+			flash('Event successfully deleted.')
+		else:
+			flash('Event successfully edited.')
 		db.session.commit()
 		return redirect(url_for('index'))
 	return render_template('editevent.html',
